@@ -7,12 +7,12 @@ const UpdateWallet = () => {
         <input
           type='number'
           className='basis-2/5 border-gray-400 dark:bg-slate-700 dark:border-slate-600 border block w-full text-lg rounded-md px-2 py-2 focus:outline-none focus:ring-1 dark:focus:ring-sky-300 placeholder:text-md'
-          placeHolder='Amount'
+          placeholder='Amount'
         />
         <input
           type='text'
           className=' border-gray-400 dark:bg-slate-700 dark:border-slate-600 border block w-full text-lg rounded-md px-2 py-2 focus:outline-none focus:ring-1 dark:focus:ring-sky-300 placeholder:text-md'
-          placeHolder='add a note (optional)'
+          placeholder='add a note (optional)'
         />
       </div>
       <div>

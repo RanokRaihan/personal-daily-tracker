@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useLogoutMutation } from "../features/auth/authApi";
 import { setTheme } from "../features/theme/themeSlice";
+import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const navigate = useNavigate();
   const { theme } = useSelector((state) => state.theme);
+  const { user } = useSelector((state) => state.auth);
+  const [logout, { isLoading }] = useLogoutMutation();
+  const navigate = useNavigate();
+
+  const isLoggedin = useAuth();
   const dispatch = useDispatch();
 
   const toggleTheme = () => {
@@ -32,8 +38,12 @@ const Navbar = () => {
     toggleMenu();
     navigate(url);
   };
+
+  const handleLogout = () => {
+    logout();
+  };
   return (
-    <div className='w-full shadow-md fixed top-0 left-0 px-4 h-16 bg-white dark:bg-slate-900'>
+    <div className='w-full shadow-md fixed z-10 top-0 left-0 px-4 h-16 bg-white dark:bg-slate-900'>
       <div className='mx-auto flex items-center justify-between h-full'>
         <div className='cursor-pointer' onClick={() => navigate("/")}>
           <h1 className='text-4xl font-semibold dark:text-white'>Logo</h1>
@@ -46,15 +56,31 @@ const Navbar = () => {
             }`}
           >
             <ul className='font-semibold space-y-1 text-sky-700 dark:text-sky-400 '>
-              <li className='cursor-pointer' onClick={() => navigateTo("/login")}>
-                Login
-              </li>
-              <li className='cursor-pointer' onClick={() => navigateTo("/register")}>
-                Register
-              </li>
-              <li className='cursor-pointer' onClick={() => navigateTo("/stats")}>
-                Stats
-              </li>
+              {isLoggedin && (
+                <li className='cursor-pointer text-xl' onClick={() => navigateTo("/")}>
+                  {user?.displayName}
+                </li>
+              )}{" "}
+              {!isLoggedin && (
+                <li className='cursor-pointer' onClick={() => navigateTo("/login")}>
+                  Login
+                </li>
+              )}
+              {!isLoggedin && (
+                <li className='cursor-pointer' onClick={() => navigateTo("/register")}>
+                  Register
+                </li>
+              )}
+              {isLoggedin && (
+                <li className='cursor-pointer' onClick={() => navigateTo("/stats")}>
+                  Stats
+                </li>
+              )}{" "}
+              {isLoggedin && (
+                <li className='cursor-pointer' onClick={handleLogout}>
+                  Logout
+                </li>
+              )}
             </ul>
             <hr />
             <div className='flex items-center gap-2'>
