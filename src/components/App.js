@@ -14,8 +14,9 @@ import Layout from "./Layout";
 
 const App = () => {
   const themeChecked = useThemeCheck();
-  const { theme } = useSelector((state) => state.theme);
   const authChecked = useAuthCheck();
+  const { theme } = useSelector((state) => state.theme);
+
   useEffect(() => {
     if (themeChecked) {
       const root = window.document.documentElement;
