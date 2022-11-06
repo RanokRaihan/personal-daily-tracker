@@ -1,7 +1,10 @@
 import React from "react";
+import { useFetchAllTrackQuery } from "../features/track/trackApi";
 import RecordContainer from "./../components/RecordContainer";
 
 const Stats = () => {
+  const { data } = useFetchAllTrackQuery();
+  console.log(data);
   return (
     <div className='max-w-screen-md mx-auto space-y-8 px-4'>
       <div className='mt-5 pb-2 border-b dark:border-gray-500'>
